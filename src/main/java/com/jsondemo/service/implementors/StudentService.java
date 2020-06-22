@@ -1,5 +1,6 @@
 package com.jsondemo.service.implementors;
 
+import com.jsondemo.exception.StudentException;
 import com.jsondemo.model.Student;
 import com.jsondemo.repository.StudentRepository;
 import com.jsondemo.service.IStudentService;
@@ -25,4 +26,14 @@ public class StudentService implements IStudentService {
         List<Student> studentList = studentRepository.getAllStudent();
         return studentList;
     }
+
+    @Override
+    public Student get(Integer id) {
+        Student student = studentRepository.get(id);
+        if (student == null){
+            throw new SecurityException(String.valueOf(StudentException.ExceptionType.STUDENT_NOT_FOUND));
+        }
+        return student;
+    }
+
 }

@@ -3,10 +3,13 @@ package com.jsondemo.controller;
 import com.jsondemo.model.Student;
 import com.jsondemo.service.implementors.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 public class StudentController {
@@ -26,5 +29,15 @@ public class StudentController {
     @GetMapping("/allstudent")
     public List<Student> list() {
         return studentService.getAllStudent();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> get(@PathVariable Integer id) {
+        try {
+            Student student = studentService.get(id);
+            return new ResponseEntity<Student>(student, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+        }
     }
 }

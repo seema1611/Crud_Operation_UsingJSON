@@ -44,4 +44,14 @@ public class StudentRepository {
         studentList.add(student);
         return student;
     }
+
+
+    public Student get(Integer id) {
+        loadData();
+        for(Student s: studentList) {
+            if( s.getId() == id )
+                return s;
+        }
+        return null;
+    }
 }
