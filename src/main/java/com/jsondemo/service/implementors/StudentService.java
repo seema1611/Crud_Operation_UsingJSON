@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class StudentService implements IStudentService {
@@ -17,5 +18,11 @@ public class StudentService implements IStudentService {
     @Override
     public Student createStudent(Student student) throws IOException {
         return studentRepository.createStudent(student);
+    }
+
+    @Override
+    public List<Student> getAllStudent() {
+        List<Student> studentList = studentRepository.getAllStudent();
+        return studentList;
     }
 }

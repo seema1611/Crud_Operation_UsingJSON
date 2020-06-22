@@ -32,6 +32,11 @@ public class StudentRepository {
         return studentList;
     }
 
+    public List<Student> getAllStudent() {
+        loadData();
+        return studentList;
+    }
+
     public Student createStudent(Student student) throws IOException {
         loadData();
         ObjectMapper objectMapper = new ObjectMapper();
