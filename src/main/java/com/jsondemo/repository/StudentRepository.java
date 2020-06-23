@@ -32,11 +32,18 @@ public class StudentRepository {
         return studentList;
     }
 
+    public void writeDataInJson() {
+        try {
+            mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Student createStudent(Student student) throws IOException {
         loadData();
         studentList.add(student);
-        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
+        writeDataInJson();
         return student;
     }
 
@@ -59,7 +66,7 @@ public class StudentRepository {
         studentById.setName((student.getName() == null) ? studentById.getName(): student.getName() );
         studentById.setAge((student.getAge() == 0) ? studentById.getAge(): student.getAge() );
         studentList.set(studentList.indexOf(studentById), studentById);
-        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
+        writeDataInJson();
     }
 
     public void deleteStudent(Integer id) throws IOException {
@@ -72,6 +79,6 @@ public class StudentRepository {
         if (deleteStudent  != null) {
             studentList.remove(deleteStudent);
         }
-        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
+        writeDataInJson();
     }
 }
