@@ -8,6 +8,8 @@ import com.jsondemo.model.Student;
 import org.springframework.stereotype.Repository;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -42,6 +44,9 @@ public class StudentRepository {
 
     public Student createStudent(Student student) throws IOException {
         loadData();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date registerDate = new Date();
+        student.setRegisterDate(registerDate);
         studentList.add(student);
         writeDataInJson();
         return student;
@@ -65,6 +70,9 @@ public class StudentRepository {
         Student studentById = getStudentById(id);
         studentById.setName((student.getName() == null) ? studentById.getName(): student.getName() );
         studentById.setAge((student.getAge() == 0) ? studentById.getAge(): student.getAge() );
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date registerDate = new Date();
+        studentById.setRegisterDate(registerDate);
         studentList.set(studentList.indexOf(studentById), studentById);
         writeDataInJson();
     }
