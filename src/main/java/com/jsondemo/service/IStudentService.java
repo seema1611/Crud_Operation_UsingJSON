@@ -9,7 +9,7 @@ import java.util.List;
 public interface IStudentService {
     Student createStudent(Student student) throws IOException;
     List<Student> getAllStudent();
-    Student getStudent(Integer id) throws StudentException;
-    void updateStudent(Integer id, Student student);
+    Student getStudentById(Integer id) throws StudentException;
+    void updateStudent(Integer id, Student student) throws IOException;
     void deleteStudent(Integer id) throws IOException;
 }

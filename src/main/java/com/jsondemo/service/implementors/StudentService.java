@@ -29,8 +29,8 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public Student getStudent(Integer id) throws StudentException {
-        Student student = studentRepository.getStudent(id);
+    public Student getStudentById(Integer id) throws StudentException {
+        Student student = studentRepository.getStudentById(id);
         if (student == null){
             throw new StudentException(ExceptionType.STUDENT_NOT_FOUND);
         }
@@ -38,7 +38,7 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public void updateStudent(Integer id, Student student) {
+    public void updateStudent(Integer id, Student student) throws IOException {
         studentRepository.updateStudent(id,student);
     }
 

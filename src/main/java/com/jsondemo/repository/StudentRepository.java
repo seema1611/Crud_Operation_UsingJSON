@@ -45,7 +45,7 @@ public class StudentRepository {
         return studentList;
     }
 
-    public Student getStudent(Integer id) {
+    public Student getStudentById(Integer id) {
         loadData();
         for(Student s: studentList) {
             if( s.getId() == id )
@@ -54,12 +54,12 @@ public class StudentRepository {
         return null;
     }
 
-    public void updateStudent(Integer id, Student student) {
-        Student student1 = getStudent(id);
-        studentList.remove(student1);
-        student.setId(id);
-        student.setName(student.getName());
-        student.setAge(student.getAge());
+    public void updateStudent(Integer id, Student student) throws IOException {
+        Student studentById = getStudentById(id);
+        studentById.setName((student.getName() == null) ? studentById.getName(): student.getName() );
+        studentById.setAge((student.getAge() == 0) ? studentById.getAge(): student.getAge() );
+        studentList.set(studentList.indexOf(studentById), studentById);
+        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
     }
 
     public void deleteStudent(Integer id) throws IOException {

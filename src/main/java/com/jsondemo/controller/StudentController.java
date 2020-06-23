@@ -29,9 +29,9 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Integer id) {
+    public ResponseEntity<Student> getStudentById(@PathVariable Integer id) {
         try {
-            Student student = studentService.getStudent(id);
+            Student student = studentService.getStudentById(id);
             return new ResponseEntity<Student>(student, HttpStatus.OK);
         } catch (NoSuchElementException | StudentException e) {
             return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
