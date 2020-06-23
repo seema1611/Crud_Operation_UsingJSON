@@ -1,6 +1,7 @@
 package com.jsondemo.service.implementors;
 
 import com.jsondemo.exception.StudentException;
+import com.jsondemo.exception.StudentException.ExceptionType;
 import com.jsondemo.model.Student;
 import com.jsondemo.repository.StudentRepository;
 import com.jsondemo.service.IStudentService;
@@ -28,12 +29,15 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public Student get(Integer id) {
+    public Student get(Integer id) throws StudentException {
         Student student = studentRepository.get(id);
         if (student == null){
-            throw new SecurityException(String.valueOf(StudentException.ExceptionType.STUDENT_NOT_FOUND));
+            throw new StudentException(ExceptionType.STUDENT_NOT_FOUND);
         }
         return student;
     }
 
+    public void deleteStudent(Integer id) throws IOException {
+        studentRepository.deleteStudent(id);
+    }
 }

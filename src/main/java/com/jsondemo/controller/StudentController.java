@@ -1,5 +1,6 @@
 package com.jsondemo.controller;
 
+import com.jsondemo.exception.StudentException;
 import com.jsondemo.model.Student;
 import com.jsondemo.service.implementors.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping("/create")
-    public Student createStudent(@RequestParam(value="id")int id, @RequestParam(value = "name") String name, @RequestParam(value="age") int age) throws IOException {
+    public Student createStudent(@RequestParam(value="id")int id,
+                                 @RequestParam(value = "name") String name,
+                                 @RequestParam(value="age") int age) throws IOException {
         Student student = new Student();
         student.setId(id);
         student.setName(name);
@@ -36,8 +39,13 @@ public class StudentController {
         try {
             Student student = studentService.get(id);
             return new ResponseEntity<Student>(student, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException | StudentException e) {
             return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteStudent(@PathVariable Integer id) throws IOException {
+        studentService.deleteStudent(id);
     }
 }

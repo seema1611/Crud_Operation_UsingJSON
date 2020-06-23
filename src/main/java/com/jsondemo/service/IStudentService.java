@@ -10,4 +10,5 @@ public interface IStudentService {
     Student createStudent(Student student) throws IOException;
     List<Student> getAllStudent();
     Student get(Integer id) throws StudentException;
+    void deleteStudent(Integer id) throws IOException;
 }

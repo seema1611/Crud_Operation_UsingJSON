@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public class StudentRepository {
     private List<Student> studentList;
+    ObjectMapper mapper= new ObjectMapper();;
 
     public List<Student> loadData() {
-        ObjectMapper mapper = new ObjectMapper();
         try {
             InputStream inputStream = new FileInputStream(new File("./src/main/resources/StudentDetails.json"));
             TypeReference<List<Student>> typeReference = new TypeReference<List<Student>>() {};
@@ -32,19 +32,18 @@ public class StudentRepository {
         return studentList;
     }
 
+
+    public Student createStudent(Student student) throws IOException {
+        loadData();
+        studentList.add(student);
+        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
+        return student;
+    }
+
     public List<Student> getAllStudent() {
         loadData();
         return studentList;
     }
-
-    public Student createStudent(Student student) throws IOException {
-        loadData();
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File("./src/main/resources/StudentDetails.json"),student);
-        studentList.add(student);
-        return student;
-    }
-
 
     public Student get(Integer id) {
         loadData();
@@ -53,5 +52,18 @@ public class StudentRepository {
                 return s;
         }
         return null;
+    }
+
+    public void deleteStudent(Integer id) throws IOException {
+        loadData();
+        Student deleteStudent = null;
+        for (Student s : studentList) {
+            if (s.getId() == id)
+                deleteStudent  = s;
+        }
+        if ( deleteStudent  != null) {
+            studentList.remove(deleteStudent );
+        }
+        mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
     }
 }
