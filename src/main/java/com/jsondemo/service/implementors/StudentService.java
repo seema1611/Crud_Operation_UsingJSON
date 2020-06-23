@@ -29,14 +29,20 @@ public class StudentService implements IStudentService {
     }
 
     @Override
-    public Student get(Integer id) throws StudentException {
-        Student student = studentRepository.get(id);
+    public Student getStudent(Integer id) throws StudentException {
+        Student student = studentRepository.getStudent(id);
         if (student == null){
             throw new StudentException(ExceptionType.STUDENT_NOT_FOUND);
         }
         return student;
     }
 
+    @Override
+    public void updateStudent(Integer id, Student student) {
+        studentRepository.updateStudent(id,student);
+    }
+
+    @Override
     public void deleteStudent(Integer id) throws IOException {
         studentRepository.deleteStudent(id);
     }

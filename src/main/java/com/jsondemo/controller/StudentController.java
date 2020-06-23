@@ -19,13 +19,7 @@ public class StudentController {
     StudentService studentService;
 
     @PostMapping("/create")
-    public Student createStudent(@RequestParam(value="id")int id,
-                                 @RequestParam(value = "name") String name,
-                                 @RequestParam(value="age") int age) throws IOException {
-        Student student = new Student();
-        student.setId(id);
-        student.setName(name);
-        student.setAge(age);
+    public Student createStudent(@RequestBody Student student) throws IOException {
         return studentService.createStudent(student);
     }
 
@@ -35,13 +29,18 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> get(@PathVariable Integer id) {
+    public ResponseEntity<Student> getStudent(@PathVariable Integer id) {
         try {
-            Student student = studentService.get(id);
+            Student student = studentService.getStudent(id);
             return new ResponseEntity<Student>(student, HttpStatus.OK);
         } catch (NoSuchElementException | StudentException e) {
             return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping("/updatestudent/{id}")
+    public void updateStudent(@PathVariable Integer id,@RequestBody Student student ) throws IOException {
+        studentService.updateStudent(id,student);
     }
 
     @DeleteMapping("/{id}")

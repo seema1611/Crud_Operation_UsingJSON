@@ -45,13 +45,21 @@ public class StudentRepository {
         return studentList;
     }
 
-    public Student get(Integer id) {
+    public Student getStudent(Integer id) {
         loadData();
         for(Student s: studentList) {
             if( s.getId() == id )
                 return s;
         }
         return null;
+    }
+
+    public void updateStudent(Integer id, Student student) {
+        Student student1 = getStudent(id);
+        studentList.remove(student1);
+        student.setId(id);
+        student.setName(student.getName());
+        student.setAge(student.getAge());
     }
 
     public void deleteStudent(Integer id) throws IOException {
@@ -61,8 +69,8 @@ public class StudentRepository {
             if (s.getId() == id)
                 deleteStudent  = s;
         }
-        if ( deleteStudent  != null) {
-            studentList.remove(deleteStudent );
+        if (deleteStudent  != null) {
+            studentList.remove(deleteStudent);
         }
         mapper.writeValue(new File("./src/main/resources/StudentDetails.json"),studentList);
     }
